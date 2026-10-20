@@ -889,12 +889,27 @@ textarea.input { min-height: 90px; resize: vertical; }
 
   .p-login { grid-template-columns:minmax(0,1.2fr) minmax(460px,1fr); background:#FBF7EE; }
   @media (min-width:861px) {
-    .p-login { align-items:start; }
-    .p-login-art { position:sticky; top:0; height:100vh; min-height:640px !important; }
-    .p-login-form { min-height:100vh; padding-top:32px; padding-bottom:32px; }
-    .p-login-box { gap:14px; padding:32px 34px 24px; }
-    .p-login-box .p-h1 { margin-bottom:-2px; }
+    .p-login { height:100vh; height:100dvh; min-height:0; overflow:hidden; align-items:stretch; }
+    .p-login-art { height:100%; min-height:0 !important; }
+    .p-login-form { height:100%; min-height:0; overflow-y:auto; align-items:safe center; padding:24px 40px; }
+    .p-login-box { gap:12px; padding:28px 32px 20px; margin:auto 0; }
+    .p-login-box .p-h1 { margin-bottom:6px; font-size:clamp(36px,3.4vw,46px) !important; }
+    .p-login-box .p-sub { font-size:16.5px; line-height:1.45; }
     .p-login-box .p-label { margin-bottom:6px; }
+    .p-login-box .p-input { padding-top:13px; padding-bottom:13px; }
+    .p-login-box .p-seg button { padding:11px 16px; }
+    .p-login-box .p-show { margin-top:4px; font-size:15px; }
+    .p-login-box .p-note { font-size:15.5px; }
+    .p-login-box .p-stack { gap:10px; }
+    .p-login .p-btn.pri { padding:17px 24px; }
+    .p-login-box .p-btn:not(.pri) { padding:14px 24px; }
+    .p-lg-safe { padding-top:12px; font-size:13px; }
+    .p-login-box .p-demo { padding:9px 14px; font-size:13px; line-height:1.4; }
+  }
+  @media (min-width:861px) and (max-height:820px) {
+    .p-login-box .p-sub, .p-lg-chip { display:none !important; }
+    .p-login-box { padding-top:22px; gap:10px; }
+    .p-login-box .p-note { font-size:14.5px; }
   }
   .p-login-art { position:relative; overflow:hidden; isolation:isolate; display:flex; flex-direction:column; justify-content:space-between; align-items:stretch; text-align:left; padding:40px 56px 44px; border-right:none; color:#FFF; background:#22261F; min-height:100vh; }
   .p-hero-slides { position:absolute; inset:0; z-index:-3; }
@@ -904,7 +919,6 @@ textarea.input { min-height: 90px; resize: vertical; }
   .p-hero-slides .p-slide:nth-child(4) { animation-delay:21s; }
   .p-hero-shade { position:absolute; inset:0; z-index:-2; background:linear-gradient(180deg, rgba(22,25,19,.62) 0%, rgba(22,25,19,.08) 30%, rgba(22,25,19,.2) 52%, rgba(22,25,19,.9) 100%), linear-gradient(90deg, rgba(22,25,19,.35), transparent 60%); }
   .p-hero-shade::after { content:""; position:absolute; inset:0; opacity:.22; mix-blend-mode:overlay; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
-  .p-hero-arch { position:absolute; z-index:-1; right:7%; top:12%; height:70%; width:auto; fill:none; stroke:rgba(216,199,155,.4); stroke-width:1.1; stroke-dasharray:1500; animation:pDraw 3.2s 0.4s cubic-bezier(.6,.1,.2,1) both; }
   .p-hero-top { display:flex; align-items:center; gap:14px; animation:pFadeUp .8s .1s both; }
   .p-hero-top img { width:52px; height:52px; object-fit:contain; filter:invert(1) brightness(2); opacity:.95; }
   .p-hero-top b { display:block; font-family:'Playfair Display',serif; font-style:italic; font-weight:500; font-size:21px; line-height:1.1; }
@@ -969,7 +983,7 @@ textarea.input { min-height: 90px; resize: vertical; }
   @media (max-width:860px) {
     .p-login { grid-template-columns:1fr; }
     .p-login-art { min-height:auto; height:min(62vh,520px); padding:22px 20px 56px; }
-    .p-hero-arch, .p-hero-feats, .p-hero-sub { display:none; }
+    .p-hero-feats, .p-hero-sub { display:none; }
     .p-hero-copy { padding-bottom:16px; }
     .p-hero-title { font-size:clamp(38px,10vw,54px); margin:10px 0 0; }
     .p-hero-top img { width:42px; height:42px; }
@@ -1047,11 +1061,10 @@ textarea.input { min-height: 90px; resize: vertical; }
       <img class="p-slide" src="assets/2580d871.webp" alt="">
     </div>
     <div class="p-hero-shade"></div>
-    <svg class="p-hero-arch" viewBox="0 0 400 520" aria-hidden="true"><path d="M20 520 V200 A180 180 0 0 1 380 200 V520" /></svg>
 
     <div class="p-hero-top">
       <img src="assets/3e98ceeb.png" alt="Escudo de Residencia Guadalupe A.C.">
-      <div><b>Residencia Guadalupe A.C.</b><small>Cuernavaca, Morelos</small></div>
+      <div><b>Residencia Guadalupe A.C.</b><small>Fundación sin fines de lucro · Cuernavaca</small></div>
     </div>
 
     <div class="p-hero-copy">
@@ -1118,7 +1131,6 @@ textarea.input { min-height: 90px; resize: vertical; }
             <ul><sc-for list="{{ lgErrores }}" as="e" hint-placeholder-count="1"><li>{{ e }}</li></sc-for></ul>
           </sc-if>
         </div>
-        <hr class="p-hr">
         <div class="p-stack">
           <button type="button" class="p-btn pri full" disabled="{{ lgCargando }}" sc-camel-on-click="{{ lgPrincipal }}">{{ lgPrincipalTxt }}</button>
           <button type="button" class="p-btn full" sc-camel-on-click="{{ lgSecundario }}">{{ lgSecundarioTxt }}</button>
@@ -1128,7 +1140,6 @@ textarea.input { min-height: 90px; resize: vertical; }
         </div>
       </sc-if>
       <div class="p-lg-safe"><svg viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 5 3.4 8.3 8 9 4.6-.7 8-4 8-9V6z"/><path d="m9 12 2 2 4-4"/></svg>Conexión segura · Solo residentes y personal de la casa</div>
-      <div class="p-foot">Fundación sin fines de lucro · Cuernavaca</div>
     </div>
   </div>
 </div>
