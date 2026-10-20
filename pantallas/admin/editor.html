@@ -1,0 +1,112 @@
+<!-- Administración › Crear o editar un aviso, menú o evento. Lógica: js/pantallas/admin/editor.js -->
+<sc-if value="{{ verEditor }}" hint-placeholder-val="{{ false }}">
+  <div class="p-backbar"><div class="p-wrap"><button type="button" class="p-link up" style="padding:0" sc-camel-on-click="{{ irAdminAvisos }}">← Volver a avisos</button></div></div>
+  <div class="p-head"><div class="p-wrap">
+    <div class="p-kicker">Administración</div>
+    <h1 class="p-h1">{{ edTituloPagina }}</h1>
+  </div></div>
+  <div class="p-body">
+    <sc-if value="{{ edCargando }}" hint-placeholder-val="{{ false }}"><div class="p-cargando">Cargando el aviso…</div></sc-if>
+    <sc-if value="{{ edListo }}" hint-placeholder-val="{{ true }}">
+    <div class="p-field">
+      <div class="p-label">Qué publica</div>
+      <div class="p-seg">
+        <sc-for list="{{ edTipos }}" as="t" hint-placeholder-count="3">
+          <button type="button" class="{{ t.cls }}" disabled="{{ t.bloqueado }}" sc-camel-on-click="{{ t.elegir }}">{{ t.nombre }}</button>
+        </sc-for>
+      </div>
+      <sc-if value="{{ edEditando }}" hint-placeholder-val="{{ false }}"><div class="p-help">El tipo no se puede cambiar después de publicar.</div></sc-if>
+    </div>
+    <div class="p-field">
+      <div class="p-label">Título del aviso</div>
+      <input class="{{ edCls.titulo }}" value="{{ edTitulo }}" sc-camel-on-change="{{ edSet.titulo }}" placeholder="{{ edTituloPh }}" maxlength="150">
+    </div>
+    <div class="p-field">
+      <div class="p-label">Categoría</div>
+      <div class="p-seg auto">
+        <sc-for list="{{ edCategorias }}" as="c" hint-placeholder-count="4">
+          <button type="button" class="{{ c.cls }}" sc-camel-on-click="{{ c.elegir }}">{{ c.nombre }}</button>
+        </sc-for>
+      </div>
+    </div>
+    <sc-if value="{{ edEsMenu }}" hint-placeholder-val="{{ false }}">
+      <div class="p-field">
+        <div class="p-label">Día del menú</div>
+        <input type="date" class="{{ edCls.menuDia }}" value="{{ edMenuDia }}" sc-camel-on-change="{{ edSet.menuDia }}">
+      </div>
+      <div class="p-field">
+        <div class="p-label">Comida</div>
+        <div class="p-seg auto">
+          <sc-for list="{{ edComidas }}" as="c" hint-placeholder-count="4">
+            <button type="button" class="{{ c.cls }}" sc-camel-on-click="{{ c.elegir }}">{{ c.nombre }}</button>
+          </sc-for>
+        </div>
+      </div>
+    </sc-if>
+    <sc-if value="{{ edEsEvento }}" hint-placeholder-val="{{ false }}">
+      <div class="p-field">
+        <div class="p-label">Día del evento</div>
+        <input type="date" class="{{ edCls.fecha }}" value="{{ edFecha }}" sc-camel-on-change="{{ edSet.fecha }}">
+      </div>
+      <div class="p-grid2">
+        <div class="p-field">
+          <div class="p-label">Empieza</div>
+          <input type="time" class="{{ edCls.hora }}" value="{{ edHora }}" sc-camel-on-change="{{ edSet.hora }}">
+        </div>
+        <div class="p-field">
+          <div class="p-label">Termina</div>
+          <input type="time" class="{{ edCls.horaFin }}" value="{{ edHoraFin }}" sc-camel-on-change="{{ edSet.horaFin }}">
+        </div>
+      </div>
+      <div class="p-field">
+        <div class="p-label">Lugar</div>
+        <input class="{{ edCls.lugar }}" value="{{ edLugar }}" sc-camel-on-change="{{ edSet.lugar }}" placeholder="Capilla, jardín central, sala común…" maxlength="120">
+      </div>
+    </sc-if>
+    <div class="p-field">
+      <div class="p-label">Texto del aviso</div>
+      <textarea class="{{ edCls.texto }}" value="{{ edTexto }}" sc-camel-on-change="{{ edSet.texto }}" placeholder="Escriba el aviso como quiere que lo lean los residentes." maxlength="5000"></textarea>
+    </div>
+    <div class="p-field">
+      <div class="p-label">Mostrar en el muro hasta (opcional)</div>
+      <input type="date" class="{{ edCls.hasta }}" value="{{ edHasta }}" sc-camel-on-change="{{ edSet.hasta }}">
+      <div class="p-help">{{ edHastaAyuda }}</div>
+    </div>
+    <hr class="p-hr">
+    <sc-if value="{{ edPuedeFijar }}" hint-placeholder-val="{{ true }}">
+      <div class="p-row" style="border:none;padding:0">
+        <span>Fijar como importante en el muro</span>
+        <span class="p-yn">
+          <button type="button" class="{{ edFijarSiCls }}" sc-camel-on-click="{{ edFijarSi }}">Sí</button>
+          <button type="button" class="{{ edFijarNoCls }}" sc-camel-on-click="{{ edFijarNo }}">No</button>
+        </span>
+      </div>
+      <hr class="p-hr">
+    </sc-if>
+    <div class="p-row" style="border:none;padding:0">
+      <span style="min-width:0">Fotografía o PDF<br><small class="p-meta" style="font-size:14.5px">{{ edAdjuntoTxt }}</small></span>
+      <sc-if value="{{ edSinAdjunto }}" hint-placeholder-val="{{ true }}">
+        <label class="p-btn sm" style="flex:none">Adjuntar<input type="file" accept="image/jpeg,image/png,application/pdf" style="display:none" sc-camel-on-change="{{ edAdjuntar }}"></label>
+      </sc-if>
+      <sc-if value="{{ edConAdjunto }}" hint-placeholder-val="{{ false }}">
+        <button type="button" class="p-btn sm danger" style="flex:none" sc-camel-on-click="{{ edQuitarAdjunto }}">Quitar</button>
+      </sc-if>
+    </div>
+    <sc-if value="{{ edFoto }}" hint-placeholder-val="{{ false }}">
+      <div class="p-card plain"><div class="p-card-img"><img src="{{ edFoto }}" alt="Fotografía adjunta"></div></div>
+    </sc-if>
+    <sc-if value="{{ edConflicto }}" hint-placeholder-val="{{ false }}">
+      <div class="p-note err">Alguien más cambió este aviso mientras usted lo editaba. Sus cambios siguen aquí: revise la versión actual y, si está de acuerdo, guarde la suya encima.
+        <div style="margin-top:8px"><button type="button" class="p-btn sm" sc-camel-on-click="{{ edVerActual }}">Ver la versión actual</button></div>
+      </div>
+    </sc-if>
+    <sc-if value="{{ edHayErrores }}" hint-placeholder-val="{{ false }}">
+      <div class="p-note err">Revise los datos marcados.<ul><sc-for list="{{ edErrores }}" as="e" hint-placeholder-count="1"><li>{{ e }}</li></sc-for></ul></div>
+    </sc-if>
+    <div class="p-stack">
+      <button type="button" class="p-btn pri full" disabled="{{ edEnviando }}" sc-camel-on-click="{{ edGuardar }}">{{ edGuardarTxt }}</button>
+      <button type="button" class="p-btn full" sc-camel-on-click="{{ irAdminAvisos }}">Cancelar</button>
+    </div>
+    </sc-if>
+  </div>
+</sc-if>

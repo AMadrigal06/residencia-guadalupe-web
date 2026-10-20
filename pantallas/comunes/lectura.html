@@ -1,0 +1,36 @@
+<!-- Ventana para leer un aviso completo (se abre desde muro, hoy y buzón). Lógica: js/pantallas/lectura.js -->
+<sc-if value="{{ hayLectura }}" hint-placeholder-val="{{ false }}">
+  <div class="p-overlay" sc-camel-on-click="{{ cerrarLectura }}">
+    <sc-if value="{{ lecturaCargando }}" hint-placeholder-val="{{ false }}">
+      <div class="p-card p-modal"><div class="p-card-in"><div class="p-cargando">Abriendo aviso…</div></div></div>
+    </sc-if>
+    <sc-for list="{{ lectura }}" as="v" hint-placeholder-count="1">
+      <div class="p-card p-modal" role="dialog" aria-modal="true" sc-camel-on-click="{{ v.detener }}">
+        <sc-if value="{{ v.foto }}" hint-placeholder-val="{{ false }}"><div class="p-card-img"><img src="{{ v.foto }}" alt="{{ v.fotoAlt }}"></div></sc-if>
+        <div class="p-card-in">
+          <div class="p-pills">
+            <span class="p-pill cat">{{ v.categoria }}</span>
+            <sc-if value="{{ v.fijado }}" hint-placeholder-val="{{ false }}"><span class="p-pill fij">Fijado · Importante</span></sc-if>
+          </div>
+          <h2 class="p-ctitle">{{ v.titulo }}</h2>
+          <div class="p-meta">{{ v.meta }}</div>
+          <sc-if value="{{ v.strong }}" hint-placeholder-val="{{ true }}"><div class="p-strong">{{ v.strong }}</div></sc-if>
+          <p class="p-text">{{ v.texto }}</p>
+          <sc-if value="{{ v.pdf }}" hint-placeholder-val="{{ false }}"><a class="p-pdf" href="{{ v.pdf }}" target="_blank" rel="noopener">📄 Abrir PDF · {{ v.pdfNombre }}</a></sc-if>
+          <sc-if value="{{ v.pdfCargando }}" hint-placeholder-val="{{ false }}"><div class="p-meta" style="margin-top:12px">📄 Preparando {{ v.pdfNombre }}…</div></sc-if>
+          <sc-if value="{{ v.puedeReaccionar }}" hint-placeholder-val="{{ false }}">
+            <div class="p-reacts">
+              <sc-for list="{{ v.reacciones }}" as="r" hint-placeholder-count="3">
+                <button type="button" class="{{ r.cls }}" title="{{ r.nombre }}" aria-label="{{ r.nombre }}" sc-camel-on-click="{{ r.elegir }}">{{ r.icono }} {{ r.n }}</button>
+              </sc-for>
+            </div>
+          </sc-if>
+        </div>
+        <div class="p-actions">
+          <button type="button" class="p-btn sm" sc-camel-on-click="{{ v.escuchar }}">{{ v.escucharTxt }}</button>
+          <button type="button" class="p-btn pri sm" style="margin-left:auto" sc-camel-on-click="{{ cerrarLectura }}">Cerrar</button>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+</sc-if>

@@ -1,0 +1,46 @@
+<!-- Buzón de notificaciones del residente (menú «Avisos»). Lógica: js/pantallas/buzon.js -->
+<sc-if value="{{ verBuzon }}" hint-placeholder-val="{{ false }}">
+  <div class="p-head"><div class="p-wrap p-ancho">
+    <div class="p-kicker">Su buzón</div>
+    <h1 class="p-h1">Notificaciones</h1>
+    <p class="p-sub">Manténgase al día con lo que pasa en la residencia.</p>
+  </div></div>
+  <div class="p-body p-ancho p-cols">
+    <sc-for list="{{ notifs }}" as="n" hint-placeholder-count="2">
+      <div class="{{ n.cls }}">
+        <div class="p-card-in">
+          <div class="p-pills">
+            <sc-if value="{{ n.nueva }}" hint-placeholder-val="{{ true }}"><span class="p-pill nuevo">Nuevo</span></sc-if>
+            <span class="p-pill">{{ n.cuando }}</span>
+          </div>
+          <h2 class="p-ctitle">{{ n.titulo }}</h2>
+          <p class="p-text p-clamp" style="margin-top:4px">{{ n.texto }}</p>
+        </div>
+        <div class="p-actions">
+          <sc-if value="{{ n.conPost }}" hint-placeholder-val="{{ true }}"><button type="button" class="p-btn pri sm" sc-camel-on-click="{{ n.abrir }}">Leer aviso</button></sc-if>
+          <sc-if value="{{ n.soloMarcar }}" hint-placeholder-val="{{ false }}"><button type="button" class="p-btn sm" sc-camel-on-click="{{ n.marcar }}">Marcar como leída</button></sc-if>
+        </div>
+      </div>
+    </sc-for>
+    <sc-if value="{{ notifsCargando }}" hint-placeholder-val="{{ false }}"><div class="p-cargando">Cargando notificaciones…</div></sc-if>
+    <sc-if value="{{ notifsError }}" hint-placeholder-val="{{ false }}">
+      <div class="p-note err">{{ notifsError }} <button type="button" class="p-link" sc-camel-on-click="{{ notifsReintentar }}">Reintentar</button></div>
+    </sc-if>
+    <sc-if value="{{ notifsHayMas }}" hint-placeholder-val="{{ false }}">
+      <button type="button" class="p-btn full" sc-camel-on-click="{{ notifsMas }}">Ver más</button>
+    </sc-if>
+    <sc-if value="{{ hayNoLeidas }}" hint-placeholder-val="{{ false }}">
+      <button type="button" class="p-btn full" sc-camel-on-click="{{ marcarLeidas }}">Marcar todo como leído</button>
+    </sc-if>
+    <sc-if value="{{ hayLeidas }}" hint-placeholder-val="{{ false }}">
+      <button type="button" class="p-link" sc-camel-on-click="{{ retirarLeidas }}">Quitar del buzón las ya leídas</button>
+    </sc-if>
+    <sc-if value="{{ sinNotifs }}" hint-placeholder-val="{{ true }}">
+      <div class="p-empty">
+        <h2 class="p-h2">No tiene notificaciones</h2>
+        <p>Cuando la administración publique un aviso nuevo se lo avisamos aquí. Mientras tanto, todo lo publicado sigue en el muro.</p>
+        <button type="button" class="p-btn pri" style="min-width:min(100%,420px)" sc-camel-on-click="{{ irMuro }}">Ir al muro</button>
+      </div>
+    </sc-if>
+  </div>
+</sc-if>

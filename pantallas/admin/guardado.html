@@ -1,0 +1,34 @@
+<!-- Administración › Confirmación después de publicar o guardar. Lógica: js/pantallas/admin/editor.js -->
+<sc-if value="{{ verGuardado }}" hint-placeholder-val="{{ false }}">
+  <div class="p-backbar"><div class="p-wrap"><button type="button" class="p-link up" style="padding:0" sc-camel-on-click="{{ irAdminAvisos }}">← Volver a avisos</button></div></div>
+  <div class="p-head"><div class="p-wrap">
+    <div class="p-kicker">Administración</div>
+    <h1 class="p-h1">{{ gdTitulo }}</h1>
+    <p class="p-sub">{{ gdTexto }}</p>
+  </div></div>
+  <div class="p-body">
+    <div class="p-kicker">Así se verá</div>
+    <sc-for list="{{ gdPreview }}" as="v" hint-placeholder-count="1">
+      <div class="p-card">
+        <sc-if value="{{ v.foto }}" hint-placeholder-val="{{ false }}"><div class="p-card-img"><img src="{{ v.foto }}" alt="{{ v.fotoAlt }}"></div></sc-if>
+        <div class="p-card-in">
+          <div class="p-pills">
+            <span class="p-pill cat">{{ v.categoria }}</span>
+            <sc-if value="{{ v.fijado }}" hint-placeholder-val="{{ true }}"><span class="p-pill fij">Fijado · Importante</span></sc-if>
+          </div>
+          <h2 class="p-ctitle">{{ v.titulo }}</h2>
+          <div class="p-meta">{{ v.meta }}</div>
+          <sc-if value="{{ v.strong }}" hint-placeholder-val="{{ true }}"><div class="p-strong">{{ v.strong }}</div></sc-if>
+          <p class="p-text">{{ v.texto }}</p>
+          <sc-if value="{{ v.pdfNombre }}" hint-placeholder-val="{{ false }}"><div class="p-meta" style="margin-top:8px">📄 {{ v.pdfNombre }}</div></sc-if>
+        </div>
+      </div>
+    </sc-for>
+    <hr class="p-hr">
+    <div class="p-stack">
+      <button type="button" class="p-btn pri full" sc-camel-on-click="{{ irMuro }}">Ver en el muro</button>
+      <button type="button" class="p-btn full" sc-camel-on-click="{{ crearAviso }}">Crear otro aviso</button>
+      <button type="button" class="p-link" sc-camel-on-click="{{ irAdminAvisos }}">Volver a avisos</button>
+    </div>
+  </div>
+</sc-if>

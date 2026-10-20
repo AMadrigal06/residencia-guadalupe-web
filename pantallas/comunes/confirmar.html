@@ -1,0 +1,11 @@
+<!-- Ventana de «¿Está seguro?» antes de eliminar. Lógica: js/app/base.js -->
+<sc-if value="{{ hayConfirm }}" hint-placeholder-val="{{ false }}">
+  <div class="p-overlay">
+    <div class="p-card p-modal" role="alertdialog" aria-modal="true" style="max-width:460px"><div class="p-card-in p-stack">
+      <h2 class="p-h2">{{ confirmTitulo }}</h2>
+      <p style="margin:0">{{ confirmTexto }}</p>
+      <button type="button" class="p-btn pri full" style="background:var(--rg-brick,#C05A2E)" disabled="{{ confirmEnviando }}" sc-camel-on-click="{{ confirmar }}">{{ confirmBoton }}</button>
+      <button type="button" class="p-btn full" sc-camel-on-click="{{ cancelarConfirm }}">Cancelar</button>
+    </div></div>
+  </div>
+</sc-if>

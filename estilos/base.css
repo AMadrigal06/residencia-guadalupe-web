@@ -1,0 +1,9 @@
+/* Reglas generales de la página: fondo, enlaces, selección y foco del teclado. */
+
+  body { margin:0; background:#F5EFE2; }
+  * { box-sizing:border-box; }
+  a { color:#8F4222; text-decoration:none; }
+  a:hover { color:#C05A2E; }
+  ::selection { background:rgba(192,90,46,.2); }
+  button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible { outline:2px solid #C05A2E; outline-offset:3px; }
+  input::placeholder, textarea::placeholder { color:#9A9184; }

@@ -1,0 +1,35 @@
+<!-- Administración › Registro de cambios (solo admin). Lógica: js/pantallas/admin/auditoria.js -->
+<sc-if value="{{ verAuditoria }}" hint-placeholder-val="{{ false }}">
+  <div class="p-backbar"><div class="p-wrap"><button type="button" class="p-link up" style="padding:0" sc-camel-on-click="{{ irPerfil }}">← Volver</button></div></div>
+  <div class="p-head"><div class="p-wrap p-stack">
+    <div>
+      <div class="p-kicker">Administración</div>
+      <h1 class="p-h1">Registro de cambios</h1>
+      <p class="p-sub">Quién hizo qué en el sistema, de lo más reciente a lo más antiguo.</p>
+    </div>
+    <div class="p-seg auto">
+      <sc-for list="{{ auFiltros }}" as="f" hint-placeholder-count="5">
+        <button type="button" class="{{ f.cls }}" sc-camel-on-click="{{ f.elegir }}">{{ f.nombre }}</button>
+      </sc-for>
+    </div>
+  </div></div>
+  <div class="p-body">
+    <sc-if value="{{ auHay }}" hint-placeholder-val="{{ true }}">
+      <div class="p-card plain"><div class="p-card-in">
+        <sc-for list="{{ auLista }}" as="a" hint-placeholder-count="4">
+          <div class="p-dl"><div class="p-label">{{ a.cuando }}</div><div style="font-weight:600">{{ a.texto }}</div></div>
+        </sc-for>
+      </div></div>
+    </sc-if>
+    <sc-if value="{{ auCargando }}" hint-placeholder-val="{{ false }}"><div class="p-cargando">Cargando registro…</div></sc-if>
+    <sc-if value="{{ auError }}" hint-placeholder-val="{{ false }}">
+      <div class="p-note err">{{ auError }} <button type="button" class="p-link" sc-camel-on-click="{{ auReintentar }}">Reintentar</button></div>
+    </sc-if>
+    <sc-if value="{{ auVacio }}" hint-placeholder-val="{{ false }}">
+      <div class="p-empty"><h2 class="p-h2">Sin movimientos</h2><p>Todavía no hay registros con este filtro.</p></div>
+    </sc-if>
+    <sc-if value="{{ auHayMas }}" hint-placeholder-val="{{ false }}">
+      <button type="button" class="p-btn full" sc-camel-on-click="{{ auMas }}">Ver más</button>
+    </sc-if>
+  </div>
+</sc-if>

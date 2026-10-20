@@ -1,0 +1,130 @@
+<!-- Muro: avisos publicados + panel lateral (hoy, próximos días, buzón, contacto). Lógica: js/pantallas/muro.js -->
+<sc-if value="{{ verMuro }}" hint-placeholder-val="{{ true }}">
+  <div class="p-head"><div class="p-wrap p-ancho">
+    <div class="p-headrow">
+      <div class="p-kicker">{{ saludoFecha }}</div>
+      <sc-if value="{{ esPersonal }}" hint-placeholder-val="{{ false }}">
+        <button type="button" class="p-link up" style="color:#8F4222;padding:0" sc-camel-on-click="{{ irPerfil }}">Administrar →</button>
+      </sc-if>
+    </div>
+    <h1 class="p-h1">{{ primerNombre }}</h1>
+    <p class="p-sub">Estas son las novedades de su residencia.</p>
+  </div></div>
+  <div class="p-body p-ancho p-muro">
+    <aside class="p-side">
+    <div class="p-hoy">
+      <div class="p-kicker">Hoy en la residencia</div>
+      <sc-for list="{{ agendaHoy }}" as="a" hint-placeholder-count="2">
+        <div class="p-hoy-item"><span>{{ a.horaTxt }}</span><b>{{ a.titulo }}</b></div>
+      </sc-for>
+      <sc-if value="{{ sinAgendaHoy }}" hint-placeholder-val="{{ false }}">
+        <p class="p-hoy-empty">{{ agendaHoyVacioTxt }}</p>
+      </sc-if>
+      <button type="button" class="p-hoy-link" sc-camel-on-click="{{ irHoy }}">Ver próximas actividades</button>
+    </div>
+
+    <sc-if value="{{ haySemana }}" hint-placeholder-val="{{ true }}">
+      <div class="p-card plain p-side-x"><div class="p-card-in">
+        <div class="p-kicker">Próximos días</div>
+        <sc-for list="{{ semana }}" as="a" hint-placeholder-count="3">
+          <button type="button" class="p-agenda p-mini" sc-camel-on-click="{{ a.abrir }}">
+            <span>{{ a.cuando }}</span>
+            <div><b>{{ a.titulo }}</b></div>
+          </button>
+        </sc-for>
+      </div></div>
+    </sc-if>
+
+    <sc-if value="{{ esResidente }}" hint-placeholder-val="{{ true }}">
+      <div class="p-card green p-side-x"><div class="p-card-in p-stack">
+        <div class="p-kicker">Su buzón</div>
+        <p style="margin:0">{{ buzonTxt }}</p>
+        <button type="button" class="p-btn sm full" sc-camel-on-click="{{ irAvisos }}">Ver mis avisos</button>
+      </div></div>
+    </sc-if>
+
+    <sc-if value="{{ esPersonal }}" hint-placeholder-val="{{ false }}">
+      <div class="p-card green p-side-x"><div class="p-card-in p-stack">
+        <div class="p-kicker">Administración</div>
+        <button type="button" class="p-btn pri sm full" sc-camel-on-click="{{ crearAviso }}">Crear aviso nuevo</button>
+        <button type="button" class="p-btn sm full" sc-camel-on-click="{{ irAdminAvisos }}">Avisos publicados</button>
+      </div></div>
+    </sc-if>
+
+    <div class="p-card plain p-side-x p-contacto">
+      <div class="p-contacto-img"><img src="assets/1f4f154b.webp" alt="Residente sonriendo en la sala"></div>
+      <div class="p-card-in p-stack">
+        <div class="p-kicker">¿Necesita algo?</div>
+        <p style="margin:0">Recepción le ayuda con su cuenta, su habitación o cualquier duda.</p>
+        <a class="p-btn sm full" href="https://wa.me/527771322103" target="_blank" rel="noopener">Escribir por WhatsApp</a>
+        <div class="p-meta">Vía Láctea 200, Col. Rancho Tetela · Cuernavaca</div>
+      </div>
+    </div>
+    </aside>
+
+    <div class="p-feed">
+
+    <sc-if value="{{ muroAnteriores }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+        <div>
+          <div class="p-h2" style="margin:0">Publicaciones anteriores</div>
+          <div class="p-meta">Publicadas hace más de un mes.</div>
+        </div>
+        <button type="button" class="p-btn sm" sc-camel-on-click="{{ verTodoMuro }}">Volver al muro</button>
+      </div>
+    </sc-if>
+    <div class="p-tabs">
+      <sc-for list="{{ filtros }}" as="f" hint-placeholder-count="6">
+        <button type="button" class="{{ f.cls }}" sc-camel-on-click="{{ f.elegir }}">{{ f.nombre }}</button>
+      </sc-for>
+    </div>
+
+    <sc-for list="{{ muro }}" as="v" hint-placeholder-count="2">
+      <div class="p-card">
+        <sc-if value="{{ v.foto }}" hint-placeholder-val="{{ false }}">
+          <div class="p-card-img"><img src="{{ v.foto }}" alt="{{ v.fotoAlt }}"></div>
+        </sc-if>
+        <div class="p-card-in">
+          <div class="p-pills">
+            <sc-if value="{{ v.nuevo }}" hint-placeholder-val="{{ false }}"><span class="p-pill nuevo">Nuevo</span></sc-if>
+            <span class="p-pill cat">{{ v.categoria }}</span>
+            <sc-if value="{{ v.fijado }}" hint-placeholder-val="{{ true }}"><span class="p-pill fij">Fijado · Importante</span></sc-if>
+          </div>
+          <h2 class="p-ctitle">{{ v.titulo }}</h2>
+          <div class="p-meta">{{ v.meta }}</div>
+          <sc-if value="{{ v.strong }}" hint-placeholder-val="{{ true }}"><div class="p-strong">{{ v.strong }}</div></sc-if>
+          <p class="p-text p-clamp">{{ v.texto }}</p>
+          <sc-if value="{{ v.pdfNombre }}" hint-placeholder-val="{{ false }}"><div class="p-meta" style="margin-top:8px">📄 {{ v.pdfNombre }}</div></sc-if>
+        </div>
+        <div class="p-actions">
+          <button type="button" class="p-btn pri sm" sc-camel-on-click="{{ v.leer }}">Leer aviso</button>
+          <button type="button" class="p-btn sm" sc-camel-on-click="{{ v.escuchar }}">{{ v.escucharTxt }}</button>
+          <sc-if value="{{ v.reaccionesTxt }}" hint-placeholder-val="{{ false }}"><span class="p-meta" style="align-self:center;margin-left:auto">{{ v.reaccionesTxt }}</span></sc-if>
+        </div>
+      </div>
+    </sc-for>
+
+    <sc-if value="{{ muroCargando }}" hint-placeholder-val="{{ false }}"><div class="p-cargando">Cargando avisos…</div></sc-if>
+    <sc-if value="{{ muroError }}" hint-placeholder-val="{{ false }}">
+      <div class="p-note err">{{ muroError }} <button type="button" class="p-link" sc-camel-on-click="{{ muroReintentar }}">Reintentar</button></div>
+    </sc-if>
+    <sc-if value="{{ muroVacio }}" hint-placeholder-val="{{ false }}">
+      <div class="p-empty">
+        <h2 class="p-h2">No hay nada en este filtro</h2>
+        <p>Todavía no se publica nada aquí. Puede ver todo el muro o buscar en las publicaciones anteriores.</p>
+        <div class="p-stack" style="max-width:420px;margin:0 auto">
+          <button type="button" class="p-btn pri full" sc-camel-on-click="{{ verTodoMuro }}">Ver todo el muro</button>
+          <button type="button" class="p-btn full" sc-camel-on-click="{{ verAnteriores }}">Ver anteriores</button>
+        </div>
+      </div>
+    </sc-if>
+    <sc-if value="{{ muroHayMas }}" hint-placeholder-val="{{ false }}">
+      <button type="button" class="p-btn full" sc-camel-on-click="{{ muroMas }}">Ver más avisos</button>
+    </sc-if>
+    <sc-if value="{{ muroConAnteriores }}" hint-placeholder-val="{{ true }}">
+      <button type="button" class="p-btn full" sc-camel-on-click="{{ verAnteriores }}">Ver publicaciones anteriores</button>
+    </sc-if>
+    <div class="p-foot">Residencia Guadalupe · Cuernavaca</div>
+    </div>
+  </div>
+</sc-if>

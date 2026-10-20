@@ -1,0 +1,100 @@
+<!-- Administración › Ficha de una cuenta: alta, aprobar, editar, baja, reponer clave. Lógica: js/pantallas/admin/ficha.js -->
+<sc-if value="{{ verFicha }}" hint-placeholder-val="{{ false }}">
+  <div class="p-backbar"><div class="p-wrap"><button type="button" class="p-link up" style="padding:0" sc-camel-on-click="{{ irAdminUsuarios }}">← Volver a usuarios</button></div></div>
+  <div class="p-head"><div class="p-wrap">
+    <div class="p-kicker">Administración</div>
+    <h1 class="p-h1">{{ fcTitulo }}</h1>
+    <sc-if value="{{ fcSub }}" hint-placeholder-val="{{ true }}"><p class="p-sub">{{ fcSub }}</p></sc-if>
+  </div></div>
+  <div class="p-body">
+    <sc-if value="{{ fcCargando }}" hint-placeholder-val="{{ false }}"><div class="p-cargando">Cargando la cuenta…</div></sc-if>
+    <sc-if value="{{ fcListo }}" hint-placeholder-val="{{ true }}">
+    <div class="p-field">
+      <div class="p-label">Nombre completo</div>
+      <input class="{{ fcCls.nombre }}" value="{{ fc.nombre }}" sc-camel-on-change="{{ fcSet.nombre }}" maxlength="150">
+    </div>
+    <div class="p-field">
+      <div class="p-label">Correo electrónico</div>
+      <input type="email" class="{{ fcCls.correo }}" value="{{ fc.correo }}" disabled="{{ fcCorreoBloqueado }}" sc-camel-on-change="{{ fcSet.correo }}" maxlength="254">
+      <sc-if value="{{ fcCorreoBloqueado }}" hint-placeholder-val="{{ false }}"><div class="p-help">El correo no se puede cambiar.</div></sc-if>
+    </div>
+    <div class="p-field">
+      <div class="p-label">Tipo de cuenta</div>
+      <div class="p-seg">
+        <sc-for list="{{ fcRoles }}" as="r" hint-placeholder-count="3">
+          <button type="button" class="{{ r.cls }}" sc-camel-on-click="{{ r.elegir }}">{{ r.nombre }}</button>
+        </sc-for>
+      </div>
+    </div>
+    <sc-if value="{{ fcNuevo }}" hint-placeholder-val="{{ false }}">
+      <div class="p-field">
+        <div class="p-label">Entra con</div>
+        <div class="p-seg">
+          <sc-for list="{{ fcModos }}" as="m" hint-placeholder-count="2">
+            <button type="button" class="{{ m.cls }}" sc-camel-on-click="{{ m.elegir }}">{{ m.nombre }}</button>
+          </sc-for>
+        </div>
+      </div>
+      <div class="p-field">
+        <div class="p-label">{{ fcClaveLabel }}</div>
+        <input inputmode="{{ fcClaveModo }}" class="{{ fcCls.clave }}" value="{{ fc.clave }}" sc-camel-on-change="{{ fcSet.clave }}" placeholder="{{ fcClavePh }}" autocomplete="off">
+      </div>
+    </sc-if>
+    <sc-if value="{{ fcConEstado }}" hint-placeholder-val="{{ true }}">
+      <div class="p-field">
+        <div class="p-label">Estado</div>
+        <div><span class="{{ fcEstadoCls }}">{{ fcEstadoTxt }}</span></div>
+      </div>
+    </sc-if>
+    <hr class="p-hr">
+    <sc-if value="{{ fcEsResidente }}" hint-placeholder-val="{{ true }}">
+      <div class="p-kicker">Datos del residente</div>
+      <div class="p-grid2">
+        <div class="p-field"><div class="p-label">Habitación</div><input class="{{ fcCls.habitacion }}" value="{{ fc.habitacion }}" sc-camel-on-change="{{ fcSet.habitacion }}" placeholder="A-102" maxlength="50"></div>
+        <div class="p-field"><div class="p-label">Ingreso</div><input type="date" class="{{ fcCls.ingreso }}" value="{{ fc.ingreso }}" max="{{ hoyIso }}" sc-camel-on-change="{{ fcSet.ingreso }}"></div>
+      </div>
+      <div class="p-field"><div class="p-label">Ubicación (opcional)</div><input class="{{ fcCls.ubicacion }}" value="{{ fc.ubicacion }}" sc-camel-on-change="{{ fcSet.ubicacion }}" placeholder="Ala sur, planta baja" maxlength="150"></div>
+      <div class="p-field"><div class="p-label">Teléfono (opcional)</div><input type="tel" class="{{ fcCls.telefono }}" value="{{ fc.telefono }}" sc-camel-on-change="{{ fcSet.telefono }}" placeholder="10 dígitos"></div>
+      <div class="p-kicker" style="margin-top:6px">Familiar de contacto (opcional)</div>
+      <div class="p-field"><div class="p-label">Nombre</div><input class="{{ fcCls.famNombre }}" value="{{ fc.famNombre }}" sc-camel-on-change="{{ fcSet.famNombre }}" placeholder="Mariana Ruiz" maxlength="150"></div>
+      <div class="p-grid2">
+        <div class="p-field"><div class="p-label">Parentesco</div><input class="{{ fcCls.famParentesco }}" value="{{ fc.famParentesco }}" sc-camel-on-change="{{ fcSet.famParentesco }}" placeholder="Hija" maxlength="50"></div>
+        <div class="p-field"><div class="p-label">Teléfono</div><input type="tel" class="{{ fcCls.famTelefono }}" value="{{ fc.famTelefono }}" sc-camel-on-change="{{ fcSet.famTelefono }}" placeholder="10 dígitos"></div>
+      </div>
+    </sc-if>
+    <sc-if value="{{ fcEsPersonal }}" hint-placeholder-val="{{ false }}">
+      <div class="p-kicker">Datos del personal</div>
+      <div class="p-field"><div class="p-label">Área (opcional)</div><input class="{{ fcCls.area }}" value="{{ fc.area }}" sc-camel-on-change="{{ fcSet.area }}" placeholder="Recepción, enfermería…" maxlength="120"></div>
+      <sc-if value="{{ fcAvisoRol }}" hint-placeholder-val="{{ false }}"><div class="p-help">{{ fcAvisoRol }}</div></sc-if>
+    </sc-if>
+    <sc-if value="{{ fcMsg }}" hint-placeholder-val="{{ false }}"><div class="p-note ok">{{ fcMsg }}</div></sc-if>
+    <sc-if value="{{ fcHayErrores }}" hint-placeholder-val="{{ false }}">
+      <div class="p-note err">Revise los datos marcados.<ul><sc-for list="{{ fcErrores }}" as="e" hint-placeholder-count="1"><li>{{ e }}</li></sc-for></ul></div>
+    </sc-if>
+    <hr class="p-hr">
+    <div class="p-stack">
+      <sc-for list="{{ fcBotones }}" as="b" hint-placeholder-count="2">
+        <button type="button" class="{{ b.cls }}" disabled="{{ fcEnviando }}" sc-camel-on-click="{{ b.accion }}">{{ b.nombre }}</button>
+      </sc-for>
+    </div>
+
+    <sc-if value="{{ fcConReponer }}" hint-placeholder-val="{{ true }}">
+      <div class="p-card plain"><div class="p-card-in p-stack">
+        <div class="p-kicker">Reponer contraseña o PIN</div>
+        <p style="margin:0">Cierra todas las sesiones de esta persona. Entréguele la nueva credencial en persona.</p>
+        <div class="p-seg">
+          <sc-for list="{{ rpModos }}" as="m" hint-placeholder-count="2">
+            <button type="button" class="{{ m.cls }}" sc-camel-on-click="{{ m.elegir }}">{{ m.nombre }}</button>
+          </sc-for>
+        </div>
+        <div class="p-field">
+          <div class="p-label">{{ rpLabel }}</div>
+          <input inputmode="{{ rpModo }}" class="{{ rpCls }}" value="{{ rpClave }}" sc-camel-on-change="{{ rpSetClave }}" placeholder="{{ rpPh }}" autocomplete="off">
+        </div>
+        <sc-if value="{{ rpError }}" hint-placeholder-val="{{ false }}"><div class="p-note err">{{ rpError }}</div></sc-if>
+        <button type="button" class="p-btn full" disabled="{{ rpEnviando }}" sc-camel-on-click="{{ rpReponer }}">Reponer</button>
+      </div></div>
+    </sc-if>
+    </sc-if>
+  </div>
+</sc-if>

@@ -1,0 +1,38 @@
+<!--
+  Marco de la página: dice qué pantallas existen y en qué orden se arman.
+  js/main.js reemplaza cada <incluir src="..."> por el archivo indicado (rutas relativas a esta carpeta).
+
+  Cuál pantalla se ve lo decide js/app/navegacion.js (rutas #/muro, #/hoy, #/admin/usuarios, ...).
+-->
+<div style="font-family:'Source Sans 3',system-ui,sans-serif;font-weight:600;color:#2A2E28;background:#F5EFE2;min-height:100vh;font-size:var(--rg-fs,17px);line-height:1.55">
+
+<!-- Sin sesión -->
+<incluir src="login.html"></incluir>
+
+<!-- Con sesión -->
+<sc-if value="{{ esApp }}" hint-placeholder-val="{{ false }}">
+<div class="p-app" style="{{ appEstilo }}">
+  <incluir src="portal/barra.html"></incluir>
+
+  <!-- Menú principal -->
+  <incluir src="portal/muro.html"></incluir>
+  <incluir src="portal/hoy.html"></incluir>
+  <incluir src="portal/buzon.html"></incluir>
+  <incluir src="portal/perfil.html"></incluir>
+
+  <!-- Administración (personal y admin) -->
+  <incluir src="admin/avisos.html"></incluir>
+  <incluir src="admin/editor.html"></incluir>
+  <incluir src="admin/guardado.html"></incluir>
+  <incluir src="admin/usuarios.html"></incluir>
+  <incluir src="admin/ficha.html"></incluir>
+  <incluir src="admin/auditoria.html"></incluir>
+
+  <!-- Ventanas que aparecen encima de cualquier pantalla -->
+  <incluir src="comunes/lectura.html"></incluir>
+  <incluir src="comunes/confirmar.html"></incluir>
+  <incluir src="comunes/toast.html"></incluir>
+</div>
+</sc-if>
+
+</div>

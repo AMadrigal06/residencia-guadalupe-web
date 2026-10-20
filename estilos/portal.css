@@ -1,0 +1,72 @@
+/* Acomodo del portal ya con sesión iniciada.
+   Escritorio (>= 1100 px): muro a dos columnas, cuadrículas y agenda en tarjetas.
+   Celular (<= 760 px): menú abajo y márgenes chicos. */
+
+  /* ===== Portal: aprovechar la pantalla en escritorio ===== */
+  .p-card { transition:box-shadow .25s, transform .25s; }
+  .p-body > .p-card, .p-feed > .p-card { animation:pFadeUp .5s ease both; }
+  .p-side { display:flex; flex-direction:column; gap:20px; }
+  .p-feed { display:flex; flex-direction:column; gap:20px; min-width:0; }
+  .p-side-x { display:none; }
+  .p-contacto-img { aspect-ratio:16/7; background:#DED3BE; }
+  .p-contacto-img img { width:100%; height:100%; object-fit:cover; display:block; }
+  .p-agenda.p-mini { padding:11px 0; gap:3px; flex-direction:column; }
+  .p-agenda.p-mini > span { flex:none; font-size:11.5px; padding-top:0; }
+  .p-agenda.p-mini b { font-size:calc(16.5px * var(--k)); }
+  .p-head { position:relative; overflow:hidden; }
+
+  @media (min-width:1100px) {
+    .p-top-in { max-width:1240px; }
+    .p-wrap.p-ancho, .p-body.p-ancho { max-width:1240px; }
+    .p-head::before { content:""; position:absolute; inset:0; background:radial-gradient(600px 260px at 88% 10%, rgba(201,211,184,.45), transparent 70%), radial-gradient(520px 240px at 70% 120%, rgba(217,207,166,.45), transparent 70%); pointer-events:none; }
+    .p-head::after { content:""; position:absolute; right:max(32px, calc(50% - 600px)); top:50%; width:190px; height:190px; transform:translateY(-50%); background:url("../assets/3e98ceeb.png") center/contain no-repeat; opacity:.07; pointer-events:none; }
+    .p-head .p-wrap { position:relative; z-index:1; }
+    .p-head .p-wrap.p-ancho { padding-top:44px; padding-bottom:34px; }
+
+    .p-muro { display:grid; grid-template-columns:minmax(0,1fr) 370px; grid-template-areas:"feed side"; gap:28px; align-items:start; }
+    .p-muro .p-feed { grid-area:feed; }
+    .p-muro .p-side { grid-area:side; position:sticky; top:86px; max-height:calc(100vh - 100px); overflow-y:auto; scrollbar-width:none; padding-bottom:4px; }
+    .p-muro .p-side::-webkit-scrollbar { display:none; }
+    .p-side-x { display:block; }
+    .p-feed .p-card:hover, .p-cols > .p-card:hover { box-shadow:0 14px 34px rgba(42,46,40,.11); transform:translateY(-2px); }
+    .p-feed .p-card-img { aspect-ratio:16/7; }
+
+    .p-cols { display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:22px; align-items:start; }
+    .p-cols > :not(.p-card) { grid-column:1 / -1; }
+    .p-cols > .p-card { display:flex; flex-direction:column; height:100%; }
+    .p-cols > .p-card > .p-card-in { flex:1 1 auto; }
+    .p-cols.p-masonry { display:block; columns:2; column-gap:22px; }
+    .p-cols.p-masonry > * { break-inside:avoid; margin-bottom:22px; height:auto; }
+    .p-cols.p-masonry > :not(.p-card) { column-span:all; }
+    .p-cols.p-masonry > button.p-btn.full:last-child { display:block; margin:0 auto; width:100%; max-width:420px; }
+    .p-cols > .p-btn.full, .p-cols > .p-hr { justify-self:stretch; }
+    .p-cols > button.p-btn.full:last-child { max-width:420px; justify-self:center; }
+
+    .p-card:has(> .p-agenda-list) { background:none; border:none; box-shadow:none; overflow:visible; }
+    .p-card:has(> .p-agenda-list):hover { transform:none; box-shadow:none; }
+    .p-agenda-list { padding:0; display:grid; grid-template-columns:repeat(auto-fill, minmax(300px,1fr)); gap:18px; }
+    .p-agenda-list > .p-agenda { flex-direction:column; gap:10px; min-height:150px; padding:22px 24px; background:#FFFDF8; border:1px solid rgba(176,140,62,.4); border-top:4px solid #B08C3E; border-radius:22px; box-shadow:0 6px 20px rgba(42,46,40,.07); transition:transform .25s, box-shadow .25s; animation:pFadeUp .5s ease both; }
+    .p-agenda-list > .p-agenda:hover { transform:translateY(-2px); box-shadow:0 14px 34px rgba(42,46,40,.11); }
+    .p-agenda-list > .p-agenda > span { flex:none; }
+  }
+
+  @media (max-width:760px) {
+    .p-app { padding-bottom:96px; }
+    .p-top { -webkit-backdrop-filter:none; backdrop-filter:none; background:#FFFDF8; }
+    .p-top-in { padding:10px 16px; }
+    #__claude_design_branding { bottom:84px !important; }
+    .p-nav { position:fixed; left:0; right:0; bottom:0; z-index:50; background:#FFFDF8; border-top:1px solid rgba(42,46,40,.1); justify-content:space-around; gap:0; padding-bottom:env(safe-area-inset-bottom); box-shadow:0 -6px 20px rgba(42,46,40,.06); }
+    .p-nav button { flex:1 1 0; border-bottom:none; border-top:2px solid transparent; padding:18px 4px 20px; font-size:12px; letter-spacing:.14em; }
+    .p-nav button.on { border-top-color:#B08C3E; }
+    .p-wrap, .p-body { padding-left:16px; padding-right:16px; }
+    .p-head .p-wrap { padding:26px 16px 22px; }
+    .p-headrow { flex-direction:column-reverse; gap:4px; }
+    .p-toast { bottom:100px; }
+    .p-cells button { font-size:10.5px; letter-spacing:.1em; }
+    .p-agenda > span { flex-basis:92px; }
+  }
+
+/* Si la pantalla es baja, el panel lateral del muro deja de quedarse fijo para que se vea completo */
+@media (min-width:1100px) and (max-height:900px) {
+  .p-muro .p-side { position:static; max-height:none; overflow:visible; }
+}

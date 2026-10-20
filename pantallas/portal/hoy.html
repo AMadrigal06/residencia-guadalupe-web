@@ -1,0 +1,37 @@
+<!-- Hoy: agenda de actividades y menús (hoy, mañana, esta semana). Lógica: js/pantallas/hoy.js -->
+<sc-if value="{{ verHoy }}" hint-placeholder-val="{{ false }}">
+  <div class="p-head"><div class="p-wrap p-ancho p-ancho">
+    <div class="p-kicker">Agenda de la casa</div>
+    <h1 class="p-h1">Actividades y talleres</h1>
+    <p class="p-sub">Todo lo que se hace hoy y en los próximos días.</p>
+  </div></div>
+  <div class="p-body p-ancho">
+    <div class="p-tabs eq">
+      <sc-for list="{{ hoyTabs }}" as="t" hint-placeholder-count="3">
+        <button type="button" class="{{ t.cls }}" sc-camel-on-click="{{ t.elegir }}">{{ t.nombre }}</button>
+      </sc-for>
+    </div>
+    <div class="p-kicker">{{ hoyEtiqueta }}</div>
+    <sc-if value="{{ hoyCargando }}" hint-placeholder-val="{{ false }}"><div class="p-cargando">Cargando agenda…</div></sc-if>
+    <sc-if value="{{ hoyError }}" hint-placeholder-val="{{ false }}">
+      <div class="p-note err">{{ hoyError }} <button type="button" class="p-link" sc-camel-on-click="{{ hoyReintentar }}">Reintentar</button></div>
+    </sc-if>
+    <sc-if value="{{ hoyHay }}" hint-placeholder-val="{{ true }}">
+      <div class="p-card plain"><div class="p-card-in p-agenda-list">
+        <sc-for list="{{ hoyItems }}" as="a" hint-placeholder-count="3">
+          <button type="button" class="p-agenda" sc-camel-on-click="{{ a.abrir }}">
+            <span>{{ a.cuando }}</span>
+            <div><b>{{ a.titulo }}</b><small>{{ a.lugar }}</small></div>
+          </button>
+        </sc-for>
+      </div></div>
+    </sc-if>
+    <sc-if value="{{ hoyVacio }}" hint-placeholder-val="{{ false }}">
+      <div class="p-empty">
+        <h2 class="p-h2">No hay actividades programadas</h2>
+        <p>Para ese día todavía no se programa nada. En cuanto la administración lo publique aparecerá aquí y en el muro.</p>
+        <button type="button" class="p-btn pri" style="min-width:min(100%,420px)" sc-camel-on-click="{{ hoyAlterna }}">{{ hoyAlternaTxt }}</button>
+      </div>
+    </sc-if>
+  </div>
+</sc-if>

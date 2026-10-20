@@ -1,0 +1,105 @@
+<!-- Perfil: datos, tamaño de letra, preferencias, cuenta y accesos de administración. Lógica: js/pantallas/perfil.js -->
+<sc-if value="{{ verPerfil }}" hint-placeholder-val="{{ false }}">
+  <div class="p-head"><div class="p-wrap p-ancho">
+    <div class="p-profile">
+      <span class="p-avatar">{{ iniciales }}</span>
+      <div style="min-width:0">
+        <div class="p-kicker">Su perfil</div>
+        <h1 class="p-h1">{{ nombreCompleto }}</h1>
+        <div class="p-meta">{{ perfilLinea }}</div>
+      </div>
+    </div>
+  </div></div>
+  <div class="p-body p-ancho p-cols p-masonry">
+    <sc-if value="{{ esPersonal }}" hint-placeholder-val="{{ false }}">
+      <div class="p-card plain"><div class="p-card-in p-stack">
+        <div class="p-kicker">Administración</div>
+        <p style="margin:0">{{ adminTexto }}</p>
+        <button type="button" class="p-btn pri full" sc-camel-on-click="{{ irAdminAvisos }}">Avisos publicados</button>
+        <sc-if value="{{ esAdmin }}" hint-placeholder-val="{{ false }}">
+          <button type="button" class="p-btn full" sc-camel-on-click="{{ irAdminUsuarios }}">Usuarios y residentes<sc-if value="{{ pendientesBadge }}" hint-placeholder-val="{{ false }}"><span class="p-badge">{{ pendientesBadge }}</span></sc-if></button>
+          <button type="button" class="p-btn full" sc-camel-on-click="{{ irAuditoria }}">Registro de cambios</button>
+        </sc-if>
+      </div></div>
+    </sc-if>
+
+    <div class="p-card plain"><div class="p-card-in">
+      <div class="p-kicker">Tamaño del texto</div>
+      <p style="margin:8px 0 0">Elija el tamaño en que quiere leer toda la aplicación. El cambio se aplica en todas las pantallas.</p>
+      <div class="p-sizes">
+        <sc-for list="{{ tamanos }}" as="t" hint-placeholder-count="3">
+          <button type="button" class="{{ t.cls }}" style="{{ t.estilo }}" sc-camel-on-click="{{ t.elegir }}">{{ t.nombre }}</button>
+        </sc-for>
+      </div>
+      <hr class="p-hr">
+      <p class="p-text" style="margin-top:12px">Así se verá el texto de los avisos del muro.</p>
+    </div></div>
+
+    <div class="p-card plain"><div class="p-card-in">
+      <sc-for list="{{ datos }}" as="d" hint-placeholder-count="5">
+        <div class="p-dl"><div class="p-label">{{ d.etiqueta }}</div><div>{{ d.valor }}</div></div>
+      </sc-for>
+      <sc-if value="{{ esResidente }}" hint-placeholder-val="{{ true }}">
+        <div class="p-help" style="margin:10px 0 0">Para corregir su habitación, teléfono o familiar, pídalo en recepción.</div>
+      </sc-if>
+    </div></div>
+
+    <sc-if value="{{ esResidente }}" hint-placeholder-val="{{ true }}">
+      <div class="p-card green"><div class="p-card-in">
+        <div class="p-kicker" style="margin-bottom:6px">Avisos que quiero recibir</div>
+        <sc-for list="{{ prefs }}" as="p" hint-placeholder-count="3">
+          <div class="p-row">
+            <span>{{ p.nombre }}</span>
+            <span class="p-yn">
+              <button type="button" class="{{ p.siCls }}" sc-camel-on-click="{{ p.si }}">Sí</button>
+              <button type="button" class="{{ p.noCls }}" sc-camel-on-click="{{ p.no }}">No</button>
+            </span>
+          </div>
+        </sc-for>
+      </div></div>
+    </sc-if>
+
+    <div class="p-card plain"><div class="p-card-in p-stack">
+      <div class="p-kicker">Su cuenta</div>
+      <sc-if value="{{ peNinguno }}" hint-placeholder-val="{{ true }}">
+        <button type="button" class="p-btn full" sc-camel-on-click="{{ peAbrirNombre }}">Cambiar mi nombre</button>
+        <button type="button" class="p-btn full" sc-camel-on-click="{{ peAbrirClave }}">Cambiar contraseña o PIN</button>
+      </sc-if>
+      <sc-if value="{{ peNombre }}" hint-placeholder-val="{{ false }}">
+        <div class="p-field">
+          <div class="p-label">Nombre completo</div>
+          <input class="{{ peInputCls }}" value="{{ peValor }}" sc-camel-on-change="{{ peSetValor }}" maxlength="150">
+        </div>
+      </sc-if>
+      <sc-if value="{{ peClave }}" hint-placeholder-val="{{ false }}">
+        <div class="p-field">
+          <div class="p-label">{{ peActualLabel }}</div>
+          <input type="password" class="{{ peActualCls }}" value="{{ peActual }}" sc-camel-on-change="{{ peSetActual }}" autocomplete="current-password">
+        </div>
+        <div class="p-field">
+          <div class="p-label">Entraré con</div>
+          <div class="p-seg">
+            <sc-for list="{{ peModos }}" as="m" hint-placeholder-count="2">
+              <button type="button" class="{{ m.cls }}" sc-camel-on-click="{{ m.elegir }}">{{ m.nombre }}</button>
+            </sc-for>
+          </div>
+        </div>
+        <div class="p-field">
+          <div class="p-label">{{ peClaveLabel }}</div>
+          <input type="password" inputmode="{{ peClaveModo }}" class="{{ peInputCls }}" value="{{ peValor }}" sc-camel-on-change="{{ peSetValor }}" placeholder="{{ peClavePh }}" autocomplete="new-password">
+        </div>
+        <div class="p-help">Se cerrará su sesión en los otros dispositivos.</div>
+      </sc-if>
+      <sc-if value="{{ peError }}" hint-placeholder-val="{{ false }}">
+        <div class="p-note err">{{ peError }}</div>
+      </sc-if>
+      <sc-if value="{{ peAbierto }}" hint-placeholder-val="{{ false }}">
+        <button type="button" class="p-btn pri full" disabled="{{ peEnviando }}" sc-camel-on-click="{{ peGuardar }}">{{ peGuardarTxt }}</button>
+        <button type="button" class="p-btn full" sc-camel-on-click="{{ peCancelar }}">Cancelar</button>
+      </sc-if>
+    </div></div>
+
+    <hr class="p-hr">
+    <button type="button" class="p-btn full" sc-camel-on-click="{{ salir }}">Cerrar sesión</button>
+  </div>
+</sc-if>

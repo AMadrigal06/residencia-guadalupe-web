@@ -1,0 +1,7 @@
+/* Si la persona activó "reducir movimiento" en su equipo, se apagan las animaciones. */
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration:.001s !important; animation-iteration-count:1 !important; transition:none !important; }
+    .p-hero-slides .p-slide:nth-child(1), .p-hero-caps span:nth-child(1), .p-hero-num span:nth-child(1) { opacity:1 !important; }
+    .p-hero-slides .p-slide:not(:nth-child(1)), .p-hero-caps span:not(:nth-child(1)), .p-hero-num span:not(:nth-child(1)), .p-bars { display:none; }
+  }

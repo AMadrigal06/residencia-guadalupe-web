@@ -1,0 +1,14 @@
+<!-- Barra superior del portal: escudo y menú (Muro, Hoy, Avisos, Perfil). Lógica: js/app/navegacion.js -->
+<div class="p-top">
+  <div class="p-top-in">
+    <button type="button" class="p-brand" sc-camel-on-click="{{ irMuro }}">
+      <img src="assets/3e98ceeb.png" alt="Escudo de Residencia Guadalupe A.C.">
+      <span><b>Residencia Guadalupe</b><small>{{ marcaSub }}</small></span>
+    </button>
+    <nav class="p-nav">
+      <sc-for list="{{ nav }}" as="n" hint-placeholder-count="4">
+        <button type="button" class="{{ n.cls }}" sc-camel-on-click="{{ n.ir }}">{{ n.nombre }}<sc-if value="{{ n.badge }}" hint-placeholder-val="{{ false }}"><span class="p-badge">{{ n.badge }}</span></sc-if></button>
+      </sc-for>
+    </nav>
+  </div>
+</div>

@@ -1,0 +1,89 @@
+<!-- Inicio de sesión y registro. Lógica: js/pantallas/login.js · Estilos: estilos/login.css -->
+<sc-if value="{{ esLogin }}" hint-placeholder-val="{{ false }}">
+<div class="p-login">
+  <div class="p-login-art">
+    <div class="p-hero-slides" aria-hidden="true">
+      <img class="p-slide" src="assets/3bdd3bb2.webp" alt="">
+      <img class="p-slide" src="assets/7722f3bc.webp" alt="">
+      <img class="p-slide" src="assets/98458132.webp" alt="">
+      <img class="p-slide" src="assets/2580d871.webp" alt="">
+    </div>
+    <div class="p-hero-shade"></div>
+
+    <div class="p-hero-top">
+      <img src="assets/3e98ceeb.png" alt="Escudo de Residencia Guadalupe A.C.">
+      <div><b>Residencia Guadalupe A.C.</b><small>Fundación sin fines de lucro · Cuernavaca</small></div>
+    </div>
+
+    <div class="p-hero-copy">
+      <div class="p-hero-kicker"><i></i>Mural de la residencia</div>
+      <h2 class="p-hero-title"><span><em>Su casa,</em></span><span><em>siempre cerca.</em></span></h2>
+      <p class="p-hero-sub">Avisos, menús y actividades de la residencia, en un solo lugar y con letra grande.</p>
+    </div>
+
+    <div class="p-hero-foot">
+      <div class="p-hero-num"><span>01</span><span>02</span><span>03</span><span>04</span></div>
+      <div class="p-hero-caps"><span>La capilla de la casa</span><span>Tardes en el jardín</span><span>Compañía todos los días</span><span>Luz en los vitrales</span></div>
+      <div class="p-bars"><i></i><i></i><i></i><i></i></div>
+    </div>
+  </div>
+<div class="p-login-form">
+    <div class="p-login-box">
+      <sc-if value="{{ modoPrueba }}" hint-placeholder-val="{{ false }}">
+        <div class="p-demo"><b>Modo de prueba.</b> Esta página está conectada a <b>{{ modoPrueba }}</b>, no a la base de datos real. Aquí solo sirven las cuentas de prueba. <a href="{{ urlReal }}">Ir a la versión real →</a></div>
+      </sc-if>
+
+      <sc-if value="{{ lgVerRegistrado }}" hint-placeholder-val="{{ false }}">
+        <div class="p-kicker">Solicitud enviada</div>
+        <h1 class="p-h1">Cuenta pendiente de aprobación</h1>
+        <p class="p-sub">{{ lgRegistradoTexto }}</p>
+        <div class="p-note">Cuando recepción confirme su habitación podrá entrar con su correo y la clave que eligió.</div>
+        <button type="button" class="p-btn pri full" sc-camel-on-click="{{ lgIrEntrar }}">Ya tengo cuenta</button>
+      </sc-if>
+
+      <sc-if value="{{ lgVerForm }}" hint-placeholder-val="{{ true }}">
+        <div class="p-lg-chip"><i></i>{{ lgFecha }}</div>
+        <h1 class="p-h1 p-lg-title">{{ lgTitulo }}</h1>
+        <p class="p-sub">{{ lgSub }}</p>
+        <sc-if value="{{ lgEsRegistro }}" hint-placeholder-val="{{ false }}">
+          <div class="p-field">
+            <div class="p-label">Nombre completo</div>
+            <div class="p-inwrap"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><input class="{{ lgNombreCls }}" value="{{ lgNombre }}" sc-camel-on-change="{{ lgSetNombre }}" placeholder="Sebastián Ruiz Mendoza" autocomplete="name" maxlength="150"></div>
+          </div>
+        </sc-if>
+        <div class="p-field">
+          <div class="p-label">Correo electrónico</div>
+          <div class="p-inwrap"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m4 7 8 6 8-6"/></svg><input type="email" class="{{ lgCorreoCls }}" value="{{ lgCorreo }}" sc-camel-on-change="{{ lgSetCorreo }}" placeholder="sebastian.ruiz@correo.com" autocomplete="email" maxlength="254"></div>
+        </div>
+        <div class="p-field">
+          <div class="p-label">Entro con</div>
+          <div class="p-seg">
+            <sc-for list="{{ lgModos }}" as="m" hint-placeholder-count="2">
+              <button type="button" class="{{ m.cls }}" sc-camel-on-click="{{ m.elegir }}">{{ m.nombre }}</button>
+            </sc-for>
+          </div>
+        </div>
+        <div class="p-field">
+          <div class="p-label">{{ lgClaveLabel }}</div>
+          <div class="p-inwrap"><svg viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="11" rx="3"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><input type="{{ lgClaveTipo }}" inputmode="{{ lgClaveModo }}" class="{{ lgClaveCls }}" value="{{ lgClave }}" sc-camel-on-change="{{ lgSetClave }}" placeholder="{{ lgClavePh }}" sc-camel-on-key-down="{{ lgEnter }}" autocomplete="{{ lgAutocomplete }}"></div>
+          <button type="button" class="p-link p-show" sc-camel-on-click="{{ lgToggleMostrar }}">{{ lgMostrarTxt }}</button>
+        </div>
+        <div class="{{ lgNotaCls }}">
+          {{ lgNota }}
+          <sc-if value="{{ lgHayErrores }}" hint-placeholder-val="{{ false }}">
+            <ul><sc-for list="{{ lgErrores }}" as="e" hint-placeholder-count="1"><li>{{ e }}</li></sc-for></ul>
+          </sc-if>
+        </div>
+        <div class="p-stack">
+          <button type="button" class="p-btn pri full" disabled="{{ lgCargando }}" sc-camel-on-click="{{ lgPrincipal }}">{{ lgPrincipalTxt }}</button>
+          <button type="button" class="p-btn full" sc-camel-on-click="{{ lgSecundario }}">{{ lgSecundarioTxt }}</button>
+          <sc-if value="{{ lgEsEntrar }}" hint-placeholder-val="{{ true }}">
+            <button type="button" class="p-link" sc-camel-on-click="{{ lgOlvido }}">¿Olvidó su contraseña?</button>
+          </sc-if>
+        </div>
+      </sc-if>
+      <div class="p-lg-safe"><svg viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 5 3.4 8.3 8 9 4.6-.7 8-4 8-9V6z"/><path d="m9 12 2 2 4-4"/></svg>Conexión segura · Solo residentes y personal de la casa</div>
+    </div>
+  </div>
+</div>
+</sc-if>

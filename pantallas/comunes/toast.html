@@ -1,0 +1,9 @@
+<!-- Aviso flotante de abajo (con botón Deshacer cuando aplica). Lógica: js/app/base.js -->
+<sc-if value="{{ hayToast }}" hint-placeholder-val="{{ false }}">
+  <div class="p-toast" role="status">
+    <span>{{ toastTexto }}</span>
+    <sc-if value="{{ toastDeshacer }}" hint-placeholder-val="{{ false }}">
+      <button type="button" sc-camel-on-click="{{ deshacer }}">Deshacer</button>
+    </sc-if>
+  </div>
+</sc-if>

@@ -1,0 +1,49 @@
+<!-- Administración › Avisos publicados (fijar, archivar, eliminar). Lógica: js/pantallas/admin/avisos.js -->
+<sc-if value="{{ verAdminAvisos }}" hint-placeholder-val="{{ false }}">
+  <div class="p-backbar"><div class="p-wrap p-ancho"><button type="button" class="p-link up" style="padding:0" sc-camel-on-click="{{ irPerfil }}">← Volver</button></div></div>
+  <div class="p-head"><div class="p-wrap p-ancho p-stack">
+    <div>
+      <div class="p-kicker">Administración</div>
+      <h1 class="p-h1">Avisos publicados</h1>
+      <p class="p-sub">{{ apSub }}</p>
+    </div>
+    <div class="p-seg">
+      <sc-for list="{{ apFiltros }}" as="f" hint-placeholder-count="3">
+        <button type="button" class="{{ f.cls }}" sc-camel-on-click="{{ f.elegir }}">{{ f.nombre }}</button>
+      </sc-for>
+    </div>
+  </div></div>
+  <div class="p-body p-ancho p-cols">
+    <button type="button" class="p-btn pri full" sc-camel-on-click="{{ crearAviso }}">Crear aviso nuevo</button>
+    <sc-for list="{{ adminAvisos }}" as="v" hint-placeholder-count="2">
+      <div class="p-card">
+        <div class="p-card-in">
+          <div class="p-pills">
+            <span class="p-pill cat">{{ v.categoria }}</span>
+            <sc-if value="{{ v.fijado }}" hint-placeholder-val="{{ true }}"><span class="p-pill fij">Fijado · Importante</span></sc-if>
+            <sc-if value="{{ v.estadoTxt }}" hint-placeholder-val="{{ false }}"><span class="p-pill baja">{{ v.estadoTxt }}</span></sc-if>
+          </div>
+          <div class="p-btitle">{{ v.titulo }}</div>
+          <div class="p-meta">{{ v.adminMeta }}</div>
+        </div>
+        <sc-if value="{{ v.conAcciones }}" hint-placeholder-val="{{ true }}">
+          <div class="p-cells">
+            <sc-for list="{{ v.acciones }}" as="a" hint-placeholder-count="4">
+              <button type="button" class="{{ a.cls }}" sc-camel-on-click="{{ a.hacer }}">{{ a.nombre }}</button>
+            </sc-for>
+          </div>
+        </sc-if>
+      </div>
+    </sc-for>
+    <sc-if value="{{ apCargando }}" hint-placeholder-val="{{ false }}"><div class="p-cargando">Cargando avisos…</div></sc-if>
+    <sc-if value="{{ apError }}" hint-placeholder-val="{{ false }}">
+      <div class="p-note err">{{ apError }} <button type="button" class="p-link" sc-camel-on-click="{{ apReintentar }}">Reintentar</button></div>
+    </sc-if>
+    <sc-if value="{{ apVacio }}" hint-placeholder-val="{{ false }}">
+      <div class="p-empty"><h2 class="p-h2">No hay avisos aquí</h2><p>Cree uno nuevo o cambie el filtro de arriba.</p></div>
+    </sc-if>
+    <sc-if value="{{ apHayMas }}" hint-placeholder-val="{{ false }}">
+      <button type="button" class="p-btn full" sc-camel-on-click="{{ apMas }}">Ver más</button>
+    </sc-if>
+  </div>
+</sc-if>
