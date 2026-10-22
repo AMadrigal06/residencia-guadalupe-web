@@ -54,7 +54,6 @@
     .p-app { padding-bottom:96px; }
     .p-top { -webkit-backdrop-filter:none; backdrop-filter:none; background:#FFFDF8; }
     .p-top-in { padding:10px 16px; }
-    #__claude_design_branding { bottom:84px !important; }
     .p-nav { position:fixed; left:0; right:0; bottom:0; z-index:50; background:#FFFDF8; border-top:1px solid rgba(42,46,40,.1); justify-content:space-around; gap:0; padding-bottom:env(safe-area-inset-bottom); box-shadow:0 -6px 20px rgba(42,46,40,.06); }
     .p-nav button { flex:1 1 0; border-bottom:none; border-top:2px solid transparent; padding:18px 4px 20px; font-size:12px; letter-spacing:.14em; }
     .p-nav button.on { border-top-color:#B08C3E; }
