@@ -43,7 +43,7 @@
   @media (min-width:861px) {
     .p-login { height:100vh; height:100dvh; min-height:0; overflow:hidden; align-items:stretch; }
     .p-login-art { height:100%; min-height:0 !important; }
-    .p-login-form { height:100%; min-height:0; overflow-y:auto; align-items:safe center; padding:24px 40px; }
+    .p-login-form { height:100%; min-height:0; overflow-x:hidden; overflow-y:auto; overscroll-behavior:contain; align-items:safe center; padding:24px 40px; }
     .p-login-box { gap:12px; padding:28px 32px 20px; margin:auto 0; }
     .p-login-box .p-h1 { margin-bottom:6px; font-size:clamp(36px,3.4vw,46px) !important; }
     .p-login-box .p-sub { font-size:16.5px; line-height:1.45; }
@@ -99,7 +99,7 @@
   .p-bars i:nth-child(2)::after { animation-name:pBar1; } .p-bars i:nth-child(3)::after { animation-name:pBar2; } .p-bars i:nth-child(4)::after { animation-name:pBar3; }
 
   .p-login-form { position:relative; padding:48px 48px; background:radial-gradient(rgba(176,140,62,.13) 1px, transparent 1.4px) 0 0/22px 22px, linear-gradient(180deg,#FFFDF8,#F5EFE2); }
-  .p-login-form::before { content:""; position:absolute; width:520px; height:520px; right:-200px; top:-200px; border-radius:999px; background:radial-gradient(circle, rgba(201,211,184,.55), transparent 65%); pointer-events:none; }
+  .p-login-form::before { content:""; position:absolute; width:320px; height:320px; right:0; top:0; background:radial-gradient(circle at 81.25% 18.75%, rgba(201,211,184,.55), transparent 65%); pointer-events:none; }
   .p-login-box { position:relative; max-width:460px; padding:38px 36px 30px; background:rgba(255,253,248,.9); -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px); border:1px solid rgba(176,140,62,.3); border-radius:32px; box-shadow:0 30px 70px rgba(42,46,40,.12), 0 2px 0 rgba(255,255,255,.8) inset; animation:pIn .9s .2s cubic-bezier(.2,.8,.2,1) both; }
   .p-login-box > * { animation:pFadeUp .7s cubic-bezier(.2,.7,.2,1) both; }
   .p-login-box > :nth-child(1) { animation-delay:.35s; } .p-login-box > :nth-child(2) { animation-delay:.42s; } .p-login-box > :nth-child(3) { animation-delay:.49s; } .p-login-box > :nth-child(4) { animation-delay:.56s; } .p-login-box > :nth-child(5) { animation-delay:.63s; } .p-login-box > :nth-child(6) { animation-delay:.7s; } .p-login-box > :nth-child(7) { animation-delay:.77s; } .p-login-box > :nth-child(8) { animation-delay:.84s; } .p-login-box > :nth-child(n+9) { animation-delay:.91s; }
